@@ -1,0 +1,8 @@
+(
+  name: "SoftStep",
+  summary: "Classes for using the Keith McMillen SoftStep midi controller",
+  version: "1.5.0",
+  schelp: "SoftStep",
+  license: "GPL",
+  copyright: "Alexander Baesler 2014"
+)

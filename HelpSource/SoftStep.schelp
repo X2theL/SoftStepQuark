@@ -1,0 +1,56 @@
+TITLE:: SoftStep
+summary:: Interface for the Keith McMillen SoftStep MIDI foot pedal
+categories:: External Control>MIDI
+related:: Classes/SSRawFunc, Classes/SSToggleFunc, Classes/SSTrigFunc, Classes/SSYFunc, Classes/SSXFunc, Classes/SoftStepLed, Classes/SoftStepLedGroup, Classes/SoftStepLedGroupSwitcher
+
+DESCRIPTION::
+Connects and disconnects the SoftStep hardware and switches it to hosted or standalone mode. Has methods for displaying text on the SoftStep display. For SSTrigFunc, SSToggleFunc etc. to work, the SoftStep must be put into "hosted" mode.
+
+Note: The Sysex messaages are reverse engineered. While I've never run into problems using these classes there is absolutely no warrenty and you use them at your own risk. Also, I've only used them on a SoftStep 1. All this might work with a SoftStep 2 as well or it might not.
+
+
+CLASSMETHODS::
+
+METHOD:: connect
+If necessary, initializes the MIDIClient, finds its inport and creates a MIDIOut for it. Then puts the SoftStep into "tethered mode" which is required for full control over all hardware features. It sets the classvars in and out to point to the SoftStep's Midi port. When all is done (which might take a few seconds) it sets the mode var to 1 (tethered) and initialized to true.
+
+ARGUMENT:: switchToHosted
+If true, puts the SoftStep into "tethered mode" which is required for full control over all hardware features. This takes about a second and works axynchronisly. When the sysex is received an led on the hardware blinks twice.
+
+METHOD:: disconnect
+Puts the hardware back into standalone mode.
+
+METHOD:: longText
+Display text on the SoftStep's four character display. If the text is longer than that it scrolls. Probably not very useful but cool.
+
+ARGUMENT:: text
+A string you want to display
+
+ARGUMENT:: speed
+The scroll speed in seconds
+
+METHOD:: clearDisplay
+Clears the display
+
+METHOD:: shortText
+Displays strings and numbers on the display and aligns it to the right. In contrast to clearDisplay, it can be called many times a second.
+
+ARGUMENT:: text
+The string or number you want to display
+
+METHOD:: backlight
+Turns the blue backlight on and off.
+
+ARGUMENT:: val
+0 is off, 1 is on
+
+
+EXAMPLES::
+
+code::
+SoftStep.connect // wait a moment. An led on the SoftStep should blink twice.
+SoftStep.backlight_(1) // switch on backlight
+SoftStep.backlight_(0) // switch it off
+SoftStep.text("This class is awesome!") // display something
+SoftStep.disconnect // Again wait for the led on the SoftStep
+::
